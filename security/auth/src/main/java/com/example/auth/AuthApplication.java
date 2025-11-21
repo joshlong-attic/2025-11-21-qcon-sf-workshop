@@ -6,10 +6,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.provisioning.JdbcUserDetailsManager;
+
+import javax.sql.DataSource;
 
 @SpringBootApplication
 public class AuthApplication {
@@ -24,13 +25,20 @@ public class AuthApplication {
     }
 
     @Bean
-    InMemoryUserDetailsManager inMemoryUserDetailsManager(PasswordEncoder pw) {
-        return new InMemoryUserDetailsManager(
-                User.withUsername("josh").password(pw.encode("pw")).roles("ADMIN", "USER").build(),
-                User.withUsername("james").password(pw.encode("pw")).roles("ADMIN", "USER").build()
-        );
+    JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
+        var u = new JdbcUserDetailsManager(dataSource);
+        u.setEnableUpdatePassword(true);
+        return u;
     }
 
+    //    @Bean
+//    InMemoryUserDetailsManager inMemoryUserDetailsManager(PasswordEncoder pw) {
+//        return new InMemoryUserDetailsManager(
+//                User.withUsername("josh").password(pw.encode("pw")).roles("ADMIN", "USER").build(),
+//                User.withUsername("james").password(pw.encode("pw")).roles("ADMIN", "USER").build()
+//        );
+//    }
+//
     @Bean
     Customizer<HttpSecurity> httpSecurityCustomizer() {
         return http -> http

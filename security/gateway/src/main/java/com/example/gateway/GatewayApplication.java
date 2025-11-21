@@ -1,5 +1,6 @@
 package com.example.gateway;
 
+import org.jspecify.annotations.NonNull;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.gateway.server.mvc.filter.BeforeFilterFunctions;
@@ -19,7 +20,7 @@ public class GatewayApplication {
     }
 
     @Bean
-    RouterFunction<ServerResponse> apiRoute() {
+    RouterFunction<@NonNull ServerResponse> apiRoute() {
         return route()
                 .before(BeforeFilterFunctions.uri("http://localhost:8080"))
                 .before(BeforeFilterFunctions.rewritePath("/api","/"))

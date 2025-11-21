@@ -2,6 +2,10 @@ logging:
   level:
     org.springframework.security: debug
 spring:
+  datasource:
+    password: secret
+    username: myuser
+    url: jdbc:postgresql://localhost/mydatabase
   security:
     oauth2:
 
@@ -9,7 +13,7 @@ spring:
         client:
 
           oidc-client:
-            require-proof-key: false
+#            require-proof-key: false
             registration:
 
               client-id: "spring"
@@ -26,10 +30,6 @@ spring:
                 - "openid"
                 - "profile"
 
-#  datasource:
-#    password: secret
-#    username: myuser
-#    url: jdbc:postgresql://localhost/mydatabase
 
   application:
     name: auth

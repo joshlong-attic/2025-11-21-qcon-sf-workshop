@@ -22,7 +22,7 @@ public class ApiApplication {
 @ResponseBody
 class HelloController {
 
-    @GetMapping("/hi")
+    @GetMapping("/me")
     Map<String, String> index(Principal principal) {
         return Map.of("name", principal.getName());
     }
