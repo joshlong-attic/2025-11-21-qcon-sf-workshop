@@ -28,7 +28,6 @@ public class ScalabilityApplication {
 
             var futures = new ArrayList<Future<?>>();
             var threads = new ConcurrentSkipListSet<String>();
-//            var executor = Executors.newCachedThreadPool();
             var executor = Executors.newVirtualThreadPerTaskExecutor();
             for (var i = 0; i < 1000; i++) {
                 var first = i == 0;
